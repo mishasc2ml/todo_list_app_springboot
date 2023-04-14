@@ -23,8 +23,8 @@ public class Category {
     private String title;
 
     @Column(name = "completed_count")
-    private Integer completedCount;
+    private Integer completedCount = 0;
 
     @Column(name = "uncompleted_count")
-    private Integer uncompletedCount;
+    private Integer uncompletedCount = 0;
 }

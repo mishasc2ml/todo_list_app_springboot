@@ -1,6 +1,5 @@
 package com.todolist.backendspring.contoller;
 
-import com.todolist.backendspring.repository.PriorityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,5 +9,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/priority")
 public class PriorityController {
 
-    private final PriorityRepository priorityRepository;
 }
