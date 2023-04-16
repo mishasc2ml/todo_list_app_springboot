@@ -60,7 +60,7 @@ public class TaskController {
     }
 
     @GetMapping("/{taskId}/set_uncompleted")
-    public ResponseEntity<String> setTaskUnCompleted(@PathVariable Long taskId) {
+    public ResponseEntity<String> setTaskUncompleted(@PathVariable Long taskId) {
         return ResponseEntity.ok(taskMapper.setTaskUncompleted(taskId));
     }
 }

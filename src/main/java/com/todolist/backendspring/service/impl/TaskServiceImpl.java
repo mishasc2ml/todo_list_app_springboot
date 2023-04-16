@@ -43,15 +43,12 @@ public class TaskServiceImpl implements TaskService {
         Category category = categoryRepository.findById(validTask.getCategory().getId())
                 .orElseThrow(() -> new NotFoundException("Category not found, not valid id", HttpStatus.NOT_FOUND));
         category.setUncompletedCount(category.getUncompletedCount() + 1);
-        System.out.println(category);
         Priority priority = priorityRepository.findById(validTask.getPriority().getId())
                 .orElseThrow(() -> new NotFoundException("Priority not found, not valid id", HttpStatus.NOT_FOUND));
-        System.out.println(priority);
         task.setTitle(validTask.getTitle());
         task.setDatetime(validTask.getDatetime());
         task.setCategory(category);
         task.setPriority(priority);
-        System.out.println(task);
         return taskRepository.save(task);
     }
 

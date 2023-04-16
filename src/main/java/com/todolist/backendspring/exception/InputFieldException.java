@@ -8,8 +8,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 @Getter
 public class InputFieldException extends RuntimeException {
+
     private final BindingResult bindingResult;
     private final Map<String, String> errors;
+
     public InputFieldException(BindingResult bindingResult) {
         this.bindingResult = bindingResult;
         this.errors = bindingResult.getFieldErrors()
