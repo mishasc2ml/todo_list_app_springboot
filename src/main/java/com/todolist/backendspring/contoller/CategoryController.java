@@ -5,16 +5,18 @@ import com.todolist.backendspring.entity.Category;
 import com.todolist.backendspring.mapper.CategoryMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,22 +25,31 @@ public class CategoryController {
 
     private final CategoryMapper categoryMapper;
 
+    @GetMapping
+    public ResponseEntity<List<Category>> getAllCategories() {
+        return ResponseEntity.ok(categoryMapper.getAllCategories());
+    }
+
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable Long categoryId) {
+        return ResponseEntity.ok(categoryMapper.getCategoryById(categoryId));
+    }
+
     @PostMapping("/new")
-    public ResponseEntity<Category> createCategory(@Valid @RequestBody CategoryRequest categoryCreateRequest,
+    public ResponseEntity<Category> createCategory(@Valid @RequestBody CategoryRequest categoryRequest,
                                                    BindingResult bindingResult) {
-        return ResponseEntity.ok(categoryMapper.createCategory(categoryCreateRequest, bindingResult));
+        return ResponseEntity.ok(categoryMapper.createCategory(categoryRequest, bindingResult));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<HttpStatus> deleteCategory(@PathVariable Long id) {
-        categoryMapper.deleteCategory(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @DeleteMapping("{categoryId}")
+    public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
+        return ResponseEntity.ok(categoryMapper.deleteCategory(categoryId));
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id,
+    @PatchMapping("{categoryId}")
+    public ResponseEntity<Category> updateCategory(@PathVariable Long categoryId,
                                                    @Valid @RequestBody CategoryRequest categoryRequest,
                                                    BindingResult bindingResult) {
-        return ResponseEntity.ok(categoryMapper.updateCategory(categoryRequest, id, bindingResult));
+        return ResponseEntity.ok(categoryMapper.updateCategory(categoryRequest, categoryId, bindingResult));
     }
 }

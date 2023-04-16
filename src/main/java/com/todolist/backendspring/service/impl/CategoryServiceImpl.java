@@ -9,13 +9,29 @@ import com.todolist.backendspring.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
+
     private final CategoryRepository categoryRepository;
 
     @Override
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public Category getCategoryById(Long categoryId) {
+        return categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException("Category not found, not valid id", HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    @Transactional
     public Category createCategory(Category category) {
         String newCategoryTitle = category.getTitle();
         if (categoryRepository.findByTitle(newCategoryTitle).size() > 0) {
@@ -25,17 +41,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteCategory(Long id) {
-        Category category = categoryRepository.findById(id)
+    @Transactional
+    public String deleteCategory(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException("Category not found, not valid id", HttpStatus.NOT_FOUND));
         categoryRepository.delete(category);
+        return "Category deleted successfully";
     }
 
     @Override
-    public Category updateCategory(CategoryRequest categoryRequest, Long id) {
-        Category category = categoryRepository.findById(id)
+    @Transactional
+    public Category updateCategory(CategoryRequest categoryRequest, Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException("Category not found, not valid id", HttpStatus.NOT_FOUND));
         category.setTitle(categoryRequest.getTitle());
-        return category;
+        return categoryRepository.save(category);
     }
 }

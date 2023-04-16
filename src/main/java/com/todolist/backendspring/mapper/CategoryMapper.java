@@ -8,12 +8,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class CategoryMapper {
 
-    private final CommonMapper commonMapper;
     private final CategoryService categoryService;
+    private final CommonMapper commonMapper;
+
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
+    }
+
+    public Category getCategoryById(Long categoryId) {
+        return categoryService.getCategoryById(categoryId);
+    }
 
     public Category createCategory(CategoryRequest categoryCreateRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -23,14 +33,14 @@ public class CategoryMapper {
         return categoryService.createCategory(newCategory);
     }
 
-    public Category updateCategory(CategoryRequest categoryRequest, Long id, BindingResult bindingResult) {
+    public Category updateCategory(CategoryRequest categoryRequest, Long categoryId, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new InputFieldException(bindingResult);
         }
-        return categoryService.updateCategory(categoryRequest, id);
+        return categoryService.updateCategory(categoryRequest, categoryId);
     }
 
-    public void deleteCategory(Long id) {
-        categoryService.deleteCategory(id);
+    public String deleteCategory(Long categoryId) {
+        return categoryService.deleteCategory(categoryId);
     }
 }

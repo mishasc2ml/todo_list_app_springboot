@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -27,10 +27,10 @@ public class Task {
     private String title;
 
     @Column(name = "completed")
-    private Boolean completed;
+    private Boolean completed = Boolean.FALSE;
 
     @Column(name = "date_time")
-    private Date datetime;
+    private LocalDate datetime;
 
     @ManyToOne
     @JoinColumn(name = "priority_id", referencedColumnName = "id")
