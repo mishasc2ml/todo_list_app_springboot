@@ -28,7 +28,7 @@ public class PriorityController {
 
     @GetMapping
     public ResponseEntity<List<Priority>> getAllPriorities() {
-        return ResponseEntity.ok(priorityMapper.getPrioritiesList());
+        return ResponseEntity.ok(priorityMapper.getAllPriorities());
     }
 
     @GetMapping("/{priorityId}")

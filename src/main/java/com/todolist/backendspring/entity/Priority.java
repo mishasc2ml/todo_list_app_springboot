@@ -24,5 +24,4 @@ public class Priority {
 
     @Column(name = "color")
     private String color;
-
 }

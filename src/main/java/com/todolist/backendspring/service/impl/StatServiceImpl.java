@@ -13,17 +13,18 @@ import org.springframework.stereotype.Service;
 public class StatServiceImpl implements StatService {
 
     private final StatRepository statRepository;
+    private final Long defaultId = 1L;
 
     @Override
     public Integer getCompletedTasksCount() {
-        Stat stat = statRepository.findById(1L)
+        Stat stat = statRepository.findById(defaultId)
                 .orElseThrow(() -> new NotFoundException("Not valid id", HttpStatus.NOT_FOUND));
         return stat.getCompletedCountTotal();
     }
 
     @Override
     public Integer getUncompletedTasksCount() {
-        Stat stat = statRepository.findById(1L)
+        Stat stat = statRepository.findById(defaultId)
                 .orElseThrow(() -> new NotFoundException("Not valid id", HttpStatus.NOT_FOUND));
         return stat.getUncompletedCountTotal();
     }

@@ -1,6 +1,7 @@
 package com.todolist.backendspring.mapper;
 
 import com.todolist.backendspring.dto.task.TaskCreateRequest;
+import com.todolist.backendspring.dto.task.TaskSearchRequest;
 import com.todolist.backendspring.dto.task.TaskUpdateRequest;
 import com.todolist.backendspring.entity.Task;
 import com.todolist.backendspring.exception.InputFieldException;
@@ -26,6 +27,15 @@ public class TaskMapper {
         return taskService.getTaskById(taskId);
     }
 
+    public List<Task> findTask(TaskSearchRequest taskSearchRequest) {
+        return taskService.findByParams(
+                taskSearchRequest.getTitle(),
+                taskSearchRequest.getCompleted(),
+                taskSearchRequest.getPriorityId(),
+                taskSearchRequest.getCategoryId()
+        );
+    }
+
     public Task createTask(TaskCreateRequest taskCreateRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new InputFieldException(bindingResult);
@@ -41,7 +51,7 @@ public class TaskMapper {
         if (bindingResult.hasErrors()) {
             throw new InputFieldException(bindingResult);
         }
-        return taskService.updateTask(taskUpdateRequest, taskId);
+        return taskService.updateTask(commonMapper.convertToEntity(taskUpdateRequest, Task.class), taskId);
     }
 
     public String setTaskComplete(Long taskId) {

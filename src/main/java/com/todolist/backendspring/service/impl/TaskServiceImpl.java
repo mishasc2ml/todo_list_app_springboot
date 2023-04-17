@@ -1,6 +1,5 @@
 package com.todolist.backendspring.service.impl;
 
-import com.todolist.backendspring.dto.task.TaskUpdateRequest;
 import com.todolist.backendspring.entity.Category;
 import com.todolist.backendspring.entity.Priority;
 import com.todolist.backendspring.entity.Task;
@@ -29,6 +28,13 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
+
+    @Override
+    public List<Task> findByParams(String title, Boolean completed,
+                                   Long priorityId, Long categoryId) {
+        return taskRepository.findByParams(title, completed, priorityId, categoryId);
+    }
+
 
     @Override
     public Task getTaskById(Long taskId) {
@@ -63,19 +69,19 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public Task updateTask(TaskUpdateRequest taskUpdateRequest, Long taskId) {
+    public Task updateTask(Task updatedTask, Long taskId) {
         return taskRepository.findById(taskId)
                 .map(task -> {
-                    Optional.ofNullable(taskUpdateRequest.getTitle()).ifPresent(task::setTitle);
-                    Optional.ofNullable(taskUpdateRequest.getDatetime()).ifPresent(task::setDatetime);
-                    Optional.ofNullable(taskUpdateRequest.getPriority()).ifPresent(givenPriority -> {
+                    Optional.ofNullable(updatedTask.getTitle()).ifPresent(task::setTitle);
+                    Optional.ofNullable(updatedTask.getDatetime()).ifPresent(task::setDatetime);
+                    Optional.ofNullable(updatedTask.getPriority()).ifPresent(givenPriority -> {
                         Priority priority = priorityRepository.findById(givenPriority.getId())
                                 .orElseThrow(() -> new NotFoundException("Priority not found, not valid id", HttpStatus.NOT_FOUND));
                         givenPriority.setTitle(priority.getTitle());
                         givenPriority.setColor(priority.getColor());
                         task.setPriority(givenPriority);
                     });
-                    Optional.ofNullable(taskUpdateRequest.getCategory()).ifPresent(givenCategory -> {
+                    Optional.ofNullable(updatedTask.getCategory()).ifPresent(givenCategory -> {
                         Category category = categoryRepository.findById(givenCategory.getId())
                                 .orElseThrow(() -> new NotFoundException("Category not found, not valid id", HttpStatus.NOT_FOUND));
                         givenCategory.setTitle(category.getTitle());
@@ -117,4 +123,3 @@ public class TaskServiceImpl implements TaskService {
         return "Task " + taskId + " was set as uncompleted";
     }
 }
-

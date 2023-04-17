@@ -1,6 +1,5 @@
 package com.todolist.backendspring.service.impl;
 
-import com.todolist.backendspring.dto.category.CategoryRequest;
 import com.todolist.backendspring.entity.Category;
 import com.todolist.backendspring.exception.NotFoundException;
 import com.todolist.backendspring.exception.NotUniqueValueException;
@@ -21,7 +20,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        return categoryRepository.findAllByOrderByTitleAsc();
+    }
+
+    @Override
+    public List<Category> findByTitle(String title) {
+        return categoryRepository.findByTitle(title);
     }
 
     @Override
@@ -34,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public Category createCategory(Category category) {
         String newCategoryTitle = category.getTitle();
-        if (categoryRepository.findByTitle(newCategoryTitle).size() > 0) {
+        if (categoryRepository.findAllByTitle(newCategoryTitle).size() > 0) {
             throw new NotUniqueValueException("Such category already exists");
         }
         return categoryRepository.save(category);
@@ -51,10 +55,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public Category updateCategory(CategoryRequest categoryRequest, Long categoryId) {
+    public Category updateCategory(Category updatedCategory, Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException("Category not found, not valid id", HttpStatus.NOT_FOUND));
-        category.setTitle(categoryRequest.getTitle());
+        category.setTitle(updatedCategory.getTitle());
         return categoryRepository.save(category);
     }
 }

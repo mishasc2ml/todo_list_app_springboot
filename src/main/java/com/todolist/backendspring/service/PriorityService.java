@@ -1,6 +1,5 @@
 package com.todolist.backendspring.service;
 
-import com.todolist.backendspring.dto.priority.PriorityUpdateRequest;
 import com.todolist.backendspring.entity.Priority;
 
 import java.util.List;
@@ -15,5 +14,5 @@ public interface PriorityService {
 
     String deletePriority(Long id);
 
-    Priority updatePriority(PriorityUpdateRequest priorityUpdateRequest, Long id);
+    Priority updatePriority(Priority priority, Long id);
 }

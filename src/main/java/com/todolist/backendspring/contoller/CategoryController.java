@@ -1,6 +1,7 @@
 package com.todolist.backendspring.contoller;
 
 import com.todolist.backendspring.dto.category.CategoryRequest;
+import com.todolist.backendspring.dto.category.CategorySearchRequest;
 import com.todolist.backendspring.entity.Category;
 import com.todolist.backendspring.mapper.CategoryMapper;
 import jakarta.validation.Valid;
@@ -51,5 +52,10 @@ public class CategoryController {
                                                    @Valid @RequestBody CategoryRequest categoryRequest,
                                                    BindingResult bindingResult) {
         return ResponseEntity.ok(categoryMapper.updateCategory(categoryRequest, categoryId, bindingResult));
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<Category>> findCategory(@RequestBody CategorySearchRequest categorySearchRequest) {
+        return ResponseEntity.ok(categoryMapper.findCategoryByTitle(categorySearchRequest));
     }
 }

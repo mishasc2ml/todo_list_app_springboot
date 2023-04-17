@@ -18,7 +18,7 @@ public class PriorityMapper {
     private final PriorityService priorityService;
     private final CommonMapper commonMapper;
 
-    public List<Priority> getPrioritiesList() {
+    public List<Priority> getAllPriorities() {
         return priorityService.getAllPriorities();
     }
 
@@ -41,6 +41,6 @@ public class PriorityMapper {
         if (bindingResult.hasErrors()) {
             throw new InputFieldException(bindingResult);
         }
-        return priorityService.updatePriority(priorityUpdateRequest, id);
+        return priorityService.updatePriority(commonMapper.convertToEntity(priorityUpdateRequest, Priority.class), id);
     }
 }

@@ -1,6 +1,7 @@
 package com.todolist.backendspring.contoller;
 
 import com.todolist.backendspring.dto.task.TaskCreateRequest;
+import com.todolist.backendspring.dto.task.TaskSearchRequest;
 import com.todolist.backendspring.dto.task.TaskUpdateRequest;
 import com.todolist.backendspring.entity.Task;
 import com.todolist.backendspring.mapper.TaskMapper;
@@ -62,5 +63,10 @@ public class TaskController {
     @GetMapping("/{taskId}/set_uncompleted")
     public ResponseEntity<String> setTaskUncompleted(@PathVariable Long taskId) {
         return ResponseEntity.ok(taskMapper.setTaskUncompleted(taskId));
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<Task>> findTask(@RequestBody TaskSearchRequest taskSearchRequest) {
+        return ResponseEntity.ok(taskMapper.findTask(taskSearchRequest));
     }
 }

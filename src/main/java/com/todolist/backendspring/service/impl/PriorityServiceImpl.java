@@ -1,6 +1,5 @@
 package com.todolist.backendspring.service.impl;
 
-import com.todolist.backendspring.dto.priority.PriorityUpdateRequest;
 import com.todolist.backendspring.entity.Priority;
 import com.todolist.backendspring.exception.NotFoundException;
 import com.todolist.backendspring.exception.NotUniqueValueException;
@@ -21,7 +20,7 @@ public class PriorityServiceImpl implements PriorityService {
 
     @Override
     public List<Priority> getAllPriorities() {
-        return priorityRepository.findAll();
+        return priorityRepository.findAllByOrderByIdAsc();
     }
 
     @Override
@@ -32,12 +31,12 @@ public class PriorityServiceImpl implements PriorityService {
 
     @Override
     @Transactional
-    public Priority createPriority(Priority priority) {
-        String newPriorityTitle = priority.getTitle();
-        if (priorityRepository.findByTitle(newPriorityTitle).size() > 0) {
+    public Priority createPriority(Priority validPriority) {
+        String newPriorityTitle = validPriority.getTitle();
+        if (priorityRepository.findAllByTitle(newPriorityTitle).size() > 0) {
             throw new NotUniqueValueException("Such priority already exists");
         }
-        return priorityRepository.save(priority);
+        return priorityRepository.save(validPriority);
     }
 
     @Override
@@ -51,10 +50,10 @@ public class PriorityServiceImpl implements PriorityService {
 
     @Override
     @Transactional
-    public Priority updatePriority(PriorityUpdateRequest priorityUpdateRequest, Long id) {
+    public Priority updatePriority(Priority updatedPriority, Long id) {
         Priority priority = priorityRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Priority not found, not valid id", HttpStatus.NOT_FOUND));
-        priority.setTitle(priorityUpdateRequest.getTitle());
+        priority.setTitle(updatedPriority.getTitle());
         return priorityRepository.save(priority);
     }
 }

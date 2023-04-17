@@ -1,6 +1,7 @@
 package com.todolist.backendspring.mapper;
 
 import com.todolist.backendspring.dto.category.CategoryRequest;
+import com.todolist.backendspring.dto.category.CategorySearchRequest;
 import com.todolist.backendspring.entity.Category;
 import com.todolist.backendspring.exception.InputFieldException;
 import com.todolist.backendspring.service.CategoryService;
@@ -37,10 +38,14 @@ public class CategoryMapper {
         if (bindingResult.hasErrors()) {
             throw new InputFieldException(bindingResult);
         }
-        return categoryService.updateCategory(categoryRequest, categoryId);
+        return categoryService.updateCategory(commonMapper.convertToEntity(categoryRequest, Category.class), categoryId);
     }
 
     public String deleteCategory(Long categoryId) {
         return categoryService.deleteCategory(categoryId);
+    }
+
+    public List<Category> findCategoryByTitle(CategorySearchRequest categorySearchRequest) {
+        return categoryService.findByTitle(categorySearchRequest.getTitle());
     }
 }

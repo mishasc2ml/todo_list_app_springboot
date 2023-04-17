@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface PriorityRepository extends JpaRepository<Priority, Long> {
 
-    List<Priority> findByTitle(String title);
+    List<Priority> findAllByTitle(String title);
+
+    List<Priority> findAllByOrderByIdAsc();
 }

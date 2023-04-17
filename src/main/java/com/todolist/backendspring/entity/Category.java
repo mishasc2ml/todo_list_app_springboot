@@ -27,5 +27,4 @@ public class Category {
 
     @Column(name = "uncompleted_count")
     private Integer uncompletedCount = 0;
-
 }
