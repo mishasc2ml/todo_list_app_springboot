@@ -8,7 +8,7 @@ public interface CategoryService {
 
     List<Category> getAllCategories();
 
-    List<Category> findByTitle(String title);
+    List<Category> findCategoriesByTitle(String title);
 
     Category getCategoryById(Long categoryId);
 

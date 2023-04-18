@@ -30,9 +30,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findByParams(String title, Boolean completed,
-                                   Long priorityId, Long categoryId) {
-        return taskRepository.findByParams(title, completed, priorityId, categoryId);
+    public List<Task> findTasksByParams(String title, Boolean completed,
+                                        Long priorityId, Long categoryId) {
+        return taskRepository.findTasksByParams(title, completed, priorityId, categoryId);
     }
 
 

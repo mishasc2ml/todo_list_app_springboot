@@ -8,10 +8,10 @@ public interface TaskService {
 
     List<Task> getAllTasks();
 
-    List<Task> findByParams(String title,
-                            Boolean completed,
-                            Long priorityId,
-                            Long categoryId);
+    List<Task> findTasksByParams(String title,
+                                 Boolean completed,
+                                 Long priorityId,
+                                 Long categoryId);
 
     Task getTaskById(Long taskId);
 

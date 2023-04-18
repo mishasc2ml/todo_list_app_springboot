@@ -27,31 +27,31 @@ public class TaskMapper {
         return taskService.getTaskById(taskId);
     }
 
-    public List<Task> findTask(TaskSearchRequest taskSearchRequest) {
-        return taskService.findByParams(
-                taskSearchRequest.getTitle(),
-                taskSearchRequest.getCompleted(),
-                taskSearchRequest.getPriorityId(),
-                taskSearchRequest.getCategoryId()
+    public List<Task> findTasksByParams(TaskSearchRequest task) {
+        return taskService.findTasksByParams(
+                task.getTitle(),
+                task.getCompleted(),
+                task.getPriorityId(),
+                task.getCategoryId()
         );
     }
 
-    public Task createTask(TaskCreateRequest taskCreateRequest, BindingResult bindingResult) {
+    public Task createTask(TaskCreateRequest task, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new InputFieldException(bindingResult);
         }
-        return taskService.createTask(commonMapper.convertToEntity(taskCreateRequest, Task.class));
+        return taskService.createTask(commonMapper.convertToEntity(task, Task.class));
     }
 
     public String deleteTask(Long taskId) {
         return taskService.deleteTask(taskId);
     }
 
-    public Task updateTask(TaskUpdateRequest taskUpdateRequest, Long taskId, BindingResult bindingResult) {
+    public Task updateTask(TaskUpdateRequest task, Long taskId, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new InputFieldException(bindingResult);
         }
-        return taskService.updateTask(commonMapper.convertToEntity(taskUpdateRequest, Task.class), taskId);
+        return taskService.updateTask(commonMapper.convertToEntity(task, Task.class), taskId);
     }
 
     public String setTaskComplete(Long taskId) {

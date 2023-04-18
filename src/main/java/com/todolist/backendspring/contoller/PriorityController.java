@@ -37,9 +37,9 @@ public class PriorityController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Priority> createPriority(@Valid @RequestBody PriorityCreateRequest priorityCreateRequest,
+    public ResponseEntity<Priority> createPriority(@Valid @RequestBody PriorityCreateRequest priority,
                                                    BindingResult bindingResult) {
-        return ResponseEntity.ok(priorityMapper.createPriority(priorityCreateRequest, bindingResult));
+        return ResponseEntity.ok(priorityMapper.createPriority(priority, bindingResult));
     }
 
     @DeleteMapping("{priorityId}")
@@ -49,8 +49,8 @@ public class PriorityController {
 
     @PatchMapping("{priorityId}")
     public ResponseEntity<Priority> updatePriority(@PathVariable Long priorityId,
-                                                   @Valid @RequestBody PriorityUpdateRequest priorityUpdateRequest,
+                                                   @Valid @RequestBody PriorityUpdateRequest priority,
                                                    BindingResult bindingResult) {
-        return ResponseEntity.ok(priorityMapper.updatePriority(priorityUpdateRequest, priorityId, bindingResult));
+        return ResponseEntity.ok(priorityMapper.updatePriority(priority, priorityId, bindingResult));
     }
 }

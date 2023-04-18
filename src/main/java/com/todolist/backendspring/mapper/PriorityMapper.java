@@ -26,21 +26,21 @@ public class PriorityMapper {
         return priorityService.getPriorityById(id);
     }
 
-    public Priority createPriority(PriorityCreateRequest priorityRequest, BindingResult bindingResult) {
+    public Priority createPriority(PriorityCreateRequest priority, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new InputFieldException(bindingResult);
         }
-        return priorityService.createPriority(commonMapper.convertToEntity(priorityRequest, Priority.class));
+        return priorityService.createPriority(commonMapper.convertToEntity(priority, Priority.class));
     }
 
     public String deletePriority(Long id) {
         return priorityService.deletePriority(id);
     }
 
-    public Priority updatePriority(PriorityUpdateRequest priorityUpdateRequest, Long id, BindingResult bindingResult) {
+    public Priority updatePriority(PriorityUpdateRequest priority, Long id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new InputFieldException(bindingResult);
         }
-        return priorityService.updatePriority(commonMapper.convertToEntity(priorityUpdateRequest, Priority.class), id);
+        return priorityService.updatePriority(commonMapper.convertToEntity(priority, Priority.class), id);
     }
 }

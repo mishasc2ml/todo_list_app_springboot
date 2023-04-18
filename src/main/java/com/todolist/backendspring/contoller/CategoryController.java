@@ -37,9 +37,9 @@ public class CategoryController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Category> createCategory(@Valid @RequestBody CategoryRequest categoryRequest,
+    public ResponseEntity<Category> createCategory(@Valid @RequestBody CategoryRequest category,
                                                    BindingResult bindingResult) {
-        return ResponseEntity.ok(categoryMapper.createCategory(categoryRequest, bindingResult));
+        return ResponseEntity.ok(categoryMapper.createCategory(category, bindingResult));
     }
 
     @DeleteMapping("{categoryId}")
@@ -49,13 +49,13 @@ public class CategoryController {
 
     @PatchMapping("{categoryId}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long categoryId,
-                                                   @Valid @RequestBody CategoryRequest categoryRequest,
+                                                   @Valid @RequestBody CategoryRequest category,
                                                    BindingResult bindingResult) {
-        return ResponseEntity.ok(categoryMapper.updateCategory(categoryRequest, categoryId, bindingResult));
+        return ResponseEntity.ok(categoryMapper.updateCategory(category, categoryId, bindingResult));
     }
 
     @PostMapping("/search")
-    public ResponseEntity<List<Category>> findCategory(@RequestBody CategorySearchRequest categorySearchRequest) {
-        return ResponseEntity.ok(categoryMapper.findCategoryByTitle(categorySearchRequest));
+    public ResponseEntity<List<Category>> findCategory(@RequestBody CategorySearchRequest filter) {
+        return ResponseEntity.ok(categoryMapper.findCategoryByTitle(filter.getTitle()));
     }
 }

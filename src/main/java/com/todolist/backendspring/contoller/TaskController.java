@@ -38,9 +38,9 @@ public class TaskController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Task> createTask(@Valid @RequestBody TaskCreateRequest taskCreateRequest,
+    public ResponseEntity<Task> createTask(@Valid @RequestBody TaskCreateRequest task,
                                            BindingResult bindingResult) {
-        return ResponseEntity.ok(taskMapper.createTask(taskCreateRequest, bindingResult));
+        return ResponseEntity.ok(taskMapper.createTask(task, bindingResult));
     }
 
     @DeleteMapping("{taskId}")
@@ -50,9 +50,9 @@ public class TaskController {
 
     @PutMapping("{taskId}")
     public ResponseEntity<Task> updateTask(@PathVariable Long taskId,
-                                           @Valid @RequestBody TaskUpdateRequest taskUpdateRequest,
+                                           @Valid @RequestBody TaskUpdateRequest task,
                                            BindingResult bindingResult) {
-        return ResponseEntity.ok(taskMapper.updateTask(taskUpdateRequest, taskId, bindingResult));
+        return ResponseEntity.ok(taskMapper.updateTask(task, taskId, bindingResult));
     }
 
     @GetMapping("/{taskId}/set_complete")
@@ -66,7 +66,7 @@ public class TaskController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<List<Task>> findTask(@RequestBody TaskSearchRequest taskSearchRequest) {
-        return ResponseEntity.ok(taskMapper.findTask(taskSearchRequest));
+    public ResponseEntity<List<Task>> findTasksByParams(@RequestBody TaskSearchRequest filter) {
+        return ResponseEntity.ok(taskMapper.findTasksByParams(filter));
     }
 }
