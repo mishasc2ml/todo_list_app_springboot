@@ -9,6 +9,8 @@ import com.todolist.backendspring.repository.PriorityRepository;
 import com.todolist.backendspring.repository.TaskRepository;
 import com.todolist.backendspring.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,11 +32,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findTasksByParams(String title, Boolean completed,
-                                        Long priorityId, Long categoryId) {
-        return taskRepository.findTasksByParams(title, completed, priorityId, categoryId);
+    public Page<Task> findTasksByParams(String title, Boolean completed, Long priorityId,
+                                        Long categoryId, Pageable pageable) {
+        return taskRepository.findTasksByParams(title, completed, priorityId, categoryId, pageable);
     }
-
 
     @Override
     public Task getTaskById(Long taskId) {

@@ -7,6 +7,7 @@ import com.todolist.backendspring.entity.Task;
 import com.todolist.backendspring.mapper.TaskMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,7 +67,7 @@ public class TaskController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<List<Task>> findTasksByParams(@RequestBody TaskSearchRequest filter) {
+    public ResponseEntity<Page<Task>> findTasksByParams(@RequestBody TaskSearchRequest filter) {
         return ResponseEntity.ok(taskMapper.findTasksByParams(filter));
     }
 }
